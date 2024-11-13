@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image and Percentage Selection Form</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <form action="/upload" method="post" enctype="multipart/form-data">
+            <h1>Select Confidence Level and Upload an Image</h1>
+            
+            <div class="radio-group">
+                <label>Select Confidence Level:</label>
+                <label class="radio-option">
+                    <input type="radio" name="confidence" value="0.8" required> 80%
+                    <span class="checkmark"></span>
+                </label>
+                <label class="radio-option">
+                    <input type="radio" name="confidence" value="0.9"> 90%
+                    <span class="checkmark"></span>
+                </label>
+                <label class="radio-option">
+                    <input type="radio" name="confidence" value="0.95"> 95%
+                    <span class="checkmark"></span>
+                </label>
+                <label class="radio-option">
+                    <input type="radio" name="confidence" value="0.99"> 99%
+                    <span class="checkmark"></span>
+                </label>
+            </div>
+
+            <div class="file-upload">
+                <label for="image-upload">Upload Image:</label>
+                <input type="file" id="image-upload" name="image" accept="image/*" required>
+            </div>
+
+            <button type="submit">Submit</button>
+        </form>
+
+        {% if download_path %}
+            <div class="download-section">
+                <p>Image compressed with confidence level: {{ confidence }}</p>
+                <a href="{{ url_for('download_file', filename=download_path) }}" class="download-button">Download Compressed Image</a>
+            </div>
+        {% endif %}
+    </div>
+
+    <style>
+        /* Styling */
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #1a1a1a;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background-color: #222;
+            padding: 2em;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+            animation: glow 2s infinite alternate;
+        }
+
+        h1 {
+            font-size: 1.5em;
+            text-align: center;
+            margin-bottom: 1.5em;
+        }
+
+        .radio-group {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 1em;
+        }
+
+        .radio-option {
+            position: relative;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            padding: 0.5em 0;
+            font-size: 1em;
+        }
+
+        .radio-option input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .checkmark {
+            height: 20px;
+            width: 20px;
+            background-color: #444;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 0.5em;
+            position: relative;
+        }
+
+        .radio-option input:checked + .checkmark {
+            background-color: #00ffff;
+            animation: pulse 0.5s;
+        }
+
+        .file-upload {
+            margin-bottom: 1.5em;
+        }
+
+        button {
+            background-color: #00ffff;
+            border: none;
+            padding: 0.8em 1.5em;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            width: 100%;
+            color: #1a1a1a;
+            transition: transform 0.3s, background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #00b3b3;
+            transform: translateY(-5px);
+        }
+
+        .download-section {
+            margin-top: 1.5em;
+            text-align: center;
+        }
+
+        .download-button {
+            background-color: #00ffff;
+            border: none;
+            padding: 0.8em 1.5em;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            color: #1a1a1a;
+            display: inline-block;
+            transition: transform 0.3s, background-color 0.3s;
+        }
+
+        .download-button:hover {
+            background-color: #00b3b3;
+            transform: translateY(-5px);
+        }
+
+        /* Animations */
+        @keyframes glow {
+            0% {
+                box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+            }
+            100% {
+                box-shadow: 0 0 20px rgba(0, 255, 255, 0.7);
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(0.9);
+            }
+            100% {
+                transform: scale(1.2);
+            }
+        }
+    </style>
+</body>
+</html>
